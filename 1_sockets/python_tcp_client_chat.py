@@ -1,40 +1,49 @@
 import socket
 import time
+import os
 import threading
 
 def receive_fun():
     while True:
         buff = client.recv(buff_size)
-        if not buff:
-            client.close()
-            break
+        if not buff:    # if server has closed connection
+            print("lost connection with server")
+            closing_connection()
         else:
-            print("client received msg:", str(buff,'utf-8'))
+            sid = buff[-2:]     #get id
+            msg = buff[:-2]     #get msg
+            print("(" + str(int.from_bytes(sid, 'little')) + ") "  + str(msg, 'utf-8') )
             buff = ''
 
 
-
-
-serverIP = "127.0.0.1"
-serverPort = 9009
-msg = "żółta gęś"
-buff_size = 1024
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((serverIP,serverPort))
-
-print('PYTHON TCP CLIENT')
-
-client_thread = threading.Thread(target=receive_fun, daemon=True)
-client_thread.start()
-msg = 1
-while msg!='close':
-    client.send(bytes(msg,'utf-8'))
-    # msg = input("enter:")
-    time.sleep(1)
-    msg+=1
+def send_fun(msg):
+    while msg!='close':
+        client.send(bytes(msg,'utf-8')+sname)    #send msg with sockets id
+        msg = input()   #enter new msg
+    closing_connection()
     
 
-client.close()
-client_thread._stop()
+def closing_connection():
+    client.shutdown(2)
+    client.close()
+    os._exit(0)
+
+
+if __name__ == "__main__":
+    serverIP = "127.0.0.1"
+    serverPort = 9009
+    msg = "witaj!"
+    buff_size = 1024
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect((serverIP,serverPort))
+
+    sname = client.getsockname()[1].to_bytes(2,'little')    #get socket id - port number
+    print('PYTHON TCP CLIENT id: ' + str(int.from_bytes(sname, 'little')))
+
+    client_thread = threading.Thread(target=receive_fun, daemon=True)   #new thread to receive msgs
+    client_thread.start()
+
+    send_fun(msg)
+        
 
 
