@@ -10,18 +10,6 @@ def read_msg(buff):
     return int.from_bytes(sid, 'little'), str(msg, 'utf-8')
 
 
-def tcp_receive_fun():
-    buff = socket_tcp.recv(buff_size)
-    while buff:
-        sid, msg = read_msg(buff)
-        print('(', sid, ') ', msg)
-        buff = socket_tcp.recv(buff_size)
-
-    # if server has closed connection
-    print('lost connection with server')
-    closing_connection()
-
-
 def udp_m_receive_fun(socket):
     try:
         while True:
@@ -29,44 +17,33 @@ def udp_m_receive_fun(socket):
             sid, msg = read_msg(buff)
             print('(', sid, ') ', msg)
     except:
-        print("exception occured")
+        print("exception occured 2")
     finally:
         socket.close()
 
 
-# def m_receive_fun():
-#     while True:
-#         buff, _uaddr = socket_udp.recvfrom(buff_size)
-#         sid, msg = read_msg(buff)
-#         print('(', sid, ') ', msg)
-    
+def tcp_receive_fun():
+    try:
+        buff = socket_tcp.recv(buff_size)
+        while buff:
+            sid, msg = read_msg(buff)
+            print('(', sid, ') ', msg)
+            buff = socket_tcp.recv(buff_size)
+
+        # if server has closed connection
+        print('lost connection with server')
+    except:
+        print("exception occured 1")
+    finally:
+        socket_tcp.close()
+        os._exit(0)
+
 
 def send_fun():
     msg = input() 
     while msg!='close':
         if msg=='U':    #send msg using UDP
             msg = input()
-            msg2 = """
-                        .-.'  '.-.
-                    .-(   \  /   )-.
-                    /   '..oOOo..'   |
-            ,       \.--.oOOOOOOo.--./
-            |\  ,   (   :oOOOOOOo:   )
-            _\.\/|   /'--'oOOOOOOo'--'|
-            '-.. ;/| \   .''oOOo''.   /
-            .--`'. :/|'-(   /  \   )-'
-            '--. `. / //'-'.__.'-;
-            `'-,_';//      ,  /|
-                    '((       |\/./_
-                    \\  . |\; ..-'
-                    \\ |\: .'`--.
-                        \\, .' .--'
-                        ))'_,-'`
-                jgs  //-'
-                    // 
-                    //
-                    |/
-            """
             socket_udp.sendto(bytes(msg,'utf-8'), (serverIP, serverPort))
         elif msg == 'M':
             msg = input()
@@ -76,12 +53,7 @@ def send_fun():
         msg = input()   #enter new msg
     socket_tcp.shutdown(2)
     
-
-def closing_connection():
-    socket_tcp.close()
-    socket_udp.close()
-    os._exit(0)
-
+    
 
 if __name__ == '__main__':
     serverIP = '127.0.0.1'
@@ -90,7 +62,6 @@ if __name__ == '__main__':
     multiPort = 9010
     buff_size = 1024
     socket_m = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # socket_m.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 1)
     socket_m.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     socket_m.bind(('', multiPort))
     group = socket.inet_aton(multiIP)
@@ -115,7 +86,26 @@ if __name__ == '__main__':
     m_client_thread = threading.Thread(target=udp_m_receive_fun, args=(socket_m,), daemon=True)   #new thread to receive msgs
     m_client_thread.start()
 
+    msg2 = """
+                        .-.'  '.-.
+                    .-(   \  /   )-.
+                    /   '..oOOo..'   |
+            ,       \.--.oOOOOOOo.--./
+            |\  ,   (   :oOOOOOOo:   )
+            _\.\/|   /'--'oOOOOOOo'--'|
+            '-.. ;/| \   .''oOOo''.   /
+            .--`'. :/|'-(   /  \   )-'
+            '--. `. / //'-'.__.'-;
+            `'-,_';//      ,  /|
+                    '((       |\/./_
+                    \\  . |\; ..-'
+                    \\ |\: .'`--.
+                        \\, .' .--'
+                        ))'_,-'`
+                jgs  //-'
+                    // 
+                    //
+                    |/
+            """
+
     send_fun()
-        
-
-

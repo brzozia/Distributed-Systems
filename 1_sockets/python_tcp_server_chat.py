@@ -4,6 +4,7 @@ import threading
 
 
 def client_fun(client, addr):
+    try:
         buff = client.recv(buff_size)
         while buff:
             sid = buff[-2:]     #get id
@@ -16,9 +17,13 @@ def client_fun(client, addr):
 
         print('closing connection with ', addr[1])
         if inp != 'close':
-            sockets.pop(addr)   # remove socket from dict
-        client.close()  
+            sockets.pop(addr)   # remove socket from dict 
+    except:
+        print("exception occured 1")
+    finally:
+        client.close()
         sys.exit()  # close this thread
+
 
 
 def tcp_comm_fun():
@@ -27,16 +32,20 @@ def tcp_comm_fun():
         client_thread = threading.Thread(target=client_fun, args=(client,addr,), daemon=True)
         sockets[addr] = client
         client_thread.start()
-        # print('thread no', addr[1], 'connected')
 
 
 def udp_comm_fun(client):
-    while True:
-        buff, uaddr = client.recvfrom(buff_size)
-        print('server received msg UDP: ' + '(' + str(uaddr[1]) + ') ' + str(buff, 'utf-8'))
-        for key in sockets:
-            if key != uaddr:
-                client.sendto(buff+uaddr[1].to_bytes(2,'little'), key)
+    try:
+        while True:
+            buff, uaddr = client.recvfrom(buff_size)
+            print('server received msg UDP: ' + '(' + str(uaddr[1]) + ') ' + str(buff, 'utf-8'))
+            for key in sockets:
+                if key != uaddr:
+                    client.sendto(buff+uaddr[1].to_bytes(2,'little'), key)
+    except:
+        print("exception occured 1")
+    finally:
+        client.close()
 
 
 if __name__ == '__main__':
@@ -64,5 +73,3 @@ if __name__ == '__main__':
     print('closing all connections')
     for key in sockets:
         sockets[key].shutdown(2)
-
-
