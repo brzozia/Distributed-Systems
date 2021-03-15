@@ -4,33 +4,32 @@ import threading
 
 
 def client_fun(client, addr):
-    while True:
-        buff = client.recv(buff_size) # tutaj dac kolejke wiadomości???
+    buff = client.recv(buff_size)
+    
+    while buff:
+        sid = buff[-2:]     #get id
+        msg = buff[:-2]     #get msg
+        print("server received msg: " + "(" + str(int.from_bytes(sid, 'little')) + ") " + str(msg, 'utf-8'))
 
-        if not buff:
-            print("closing connection with ", addr[1])
-            threads.pop(addr)
-            client.close()  
-            sys.exit()  # close this thread
-        else:
-            sid = buff[-2:]     #get id
-            msg = buff[:-2]     #get msg
-            print("server received msg: " + "(" + str(int.from_bytes(sid, 'little')) + ") " + str(msg, 'utf-8'))
+        for key in threads:
+            if key != addr:
+                threads[key][0].send(buff)
+        buff = client.recv(buff_size)
 
-            for key in threads:
-                if key != addr:
-                    threads[key].send(buff)
-            
-            buff = ''
+    print("closing connection with ", addr[1])
+    if inp != 'close':
+        threads.pop(addr)   # remove socket from dict
+    client.close()  
+    sys.exit()  # close this thread
 
 
 def comm_fun():
     while True:
         client, addr = server_socket.accept()
         client_thread = threading.Thread(target=client_fun, args=(client,addr,), daemon=True)
-        threads[addr] = client
+        threads[addr] = (client,client_thread)
         client_thread.start()
-        print("thread no " + addr[1] + " connected")
+        print("thread no", addr[1], "connected")
     
 
 if __name__ == "__main__":
@@ -41,19 +40,18 @@ if __name__ == "__main__":
     server_socket.listen()
     buff_size = 1024
     threads = {}
+    inp = ''
 
     comm_thread = threading.Thread(target=comm_fun, daemon=True)
     comm_thread.start()
 
     print('PYTHON TCP SERVER')
 
-    inp = ''
     while inp != 'close':
         inp = input()
 
     print("closing all connections")
     for key in threads:
-        threads[key].shutdown(2)
-        threads[key].close()
+        threads[key][0].shutdown(2)
 
 

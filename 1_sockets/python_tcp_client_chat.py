@@ -4,27 +4,28 @@ import os
 import threading
 
 def receive_fun():
-    while True:
+    buff = client.recv(buff_size)
+    
+    while buff:
+        sid = buff[-2:]     #get id
+        msg = buff[:-2]     #get msg
+        print("(" + str(int.from_bytes(sid, 'little')) + ") "  + str(msg, 'utf-8') )
         buff = client.recv(buff_size)
-        if not buff:    # if server has closed connection
-            print("lost connection with server")
-            closing_connection()
-        else:
-            sid = buff[-2:]     #get id
-            msg = buff[:-2]     #get msg
-            print("(" + str(int.from_bytes(sid, 'little')) + ") "  + str(msg, 'utf-8') )
-            buff = ''
+
+    # if server has closed connection
+    print("lost connection with server")
+    closing_connection()
 
 
 def send_fun(msg):
     while msg!='close':
         client.send(bytes(msg,'utf-8')+sname)    #send msg with sockets id
         msg = input()   #enter new msg
+    client.shutdown(2)
     closing_connection()
     
 
 def closing_connection():
-    client.shutdown(2)
     client.close()
     os._exit(0)
 
