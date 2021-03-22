@@ -13,7 +13,7 @@ import com.rabbitmq.client.*;
 public class Supplier {
     public static void main(String[] argv) throws IOException, TimeoutException {
         String name = argv[0];
-
+        final Integer[] count = {0};
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter list of products for sale (separated by a space): ");
         ArrayList<String> productList = new ArrayList<>(Arrays.asList(br.readLine().split(" ")));
@@ -41,8 +41,18 @@ public class Supplier {
                 channel.basicAck(envelope.getDeliveryTag(), false);
 
                 if(!from.toString().equals("admin")) {
+                    count[0] += 1;
+                    System.out.println("Order numer:"+ count[0]);
                     channel.basicPublish(SUPPLIERS_EXCHANGE_NAME, "r." + from, props, message.getBytes("UTF-8"));
-                    System.out.println("Send message to: " + "r." + from);
+                    System.out.println("Send message to: " + "r." + from + "\n");
+                }
+                if(message.equals("close")){
+                    try {
+                        channel.close();
+                        connection.close();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -64,7 +74,7 @@ public class Supplier {
         // queue for receiving messages from administrator
         String ADMIN_SUPPLIERS_EXCHANGE_NAME = "fromAdminToSuppliers";
         channel.exchangeDeclare(ADMIN_SUPPLIERS_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
-        String queueName = channel.queueDeclare().getQueue();
+        String queueName = channel.queueDeclare("ADMIN_SUPPLIERS_EXCHANGE_NAME"+"queueSupplier"+name, true, false, false, null).getQueue();
         channel.queueBind(queueName, ADMIN_SUPPLIERS_EXCHANGE_NAME, "");
         System.out.println("created fanout queue: " + queueName);
         channel.basicConsume(queueName, false, consumer);

@@ -22,8 +22,9 @@ public class Team {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
-                System.out.println("Received message from: " + properties.getHeaders().get("name") + " processed order: " + message );
+                System.out.println("Received message from: " + properties.getHeaders().get("name") + " message: " + message );
                 channel.basicAck(envelope.getDeliveryTag(), false);
+
             }
         };
 
@@ -43,7 +44,7 @@ public class Team {
         // queue for receiving messages from administrator
         String ADMIN_TEAMS_EXCHANGE_NAME = "fromAdminToTeams";
         channel.exchangeDeclare(ADMIN_TEAMS_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
-        String queueName = channel.queueDeclare().getQueue();
+        String queueName = channel.queueDeclare("ADMIN_TEAMS_EXCHANGE_NAME"+"queueTeam"+name,true, false, false, null).getQueue();
         channel.queueBind(queueName, ADMIN_TEAMS_EXCHANGE_NAME, "");
         System.out.println("created fanout queue: " + queueName);
         channel.basicConsume(queueName, false, consumer);
@@ -62,6 +63,8 @@ public class Team {
             channel.basicPublish(TEAMS_EXCHANGE_NAME, "o."+order, props, order.getBytes("UTF-8"));
             System.out.println("Sent: " + order);
         }
+        channel.close();
+        connection.close();
 
     }
 }

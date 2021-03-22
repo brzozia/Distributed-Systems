@@ -23,7 +23,7 @@ public class Administrator {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
-                System.out.println("Received message " +  message + " from: " + properties.getHeaders().get("name") );
+                System.out.println("Received message from: " + properties.getHeaders().get("name") + " processed order: " + message );
                 channel.basicAck(envelope.getDeliveryTag(), false);
             }
         };
@@ -56,10 +56,13 @@ public class Administrator {
 
         String message = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        while (!message.equals("close")) {
+        while (true) {
 
             System.out.println("Enter receiver (team/sup/both): ");
             String receiver = br.readLine();
+            if(receiver.equals("close")){
+                break;
+            }
             System.out.println("Enter message: ");
             message = br.readLine();
 
@@ -80,5 +83,7 @@ public class Administrator {
                 System.out.println("Wrong receiver name");
             }
         }
+        channel.close();
+        connection.close();
     }
 }
