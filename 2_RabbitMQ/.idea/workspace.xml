@@ -3,16 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8b057cdc-906c-49f0-bb81-f7315a70a9e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Administrator$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Administrator$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Administrator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Administrator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/META-INF/TeamsAndSuppliers.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Supplier$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Supplier$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Supplier.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Supplier.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Team$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Team$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Team.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TeamsAndSuppliers/Team.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Administrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Administrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Supplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Supplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Team.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +30,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../RabbitMQ_done" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.28735632" />
@@ -111,7 +101,8 @@
       <workItem from="1616091695892" duration="1840000" />
       <workItem from="1616152698353" duration="4474000" />
       <workItem from="1616164079929" duration="16874000" />
-      <workItem from="1616355881582" duration="9789000" />
+      <workItem from="1616355881582" duration="10141000" />
+      <workItem from="1616768395767" duration="1869000" />
     </task>
     <servers />
   </component>
@@ -119,10 +110,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="45" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616368496882">
+    <state x="45" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616768688117">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="45" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616368496882" />
+    <state x="45" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616768688117" />
     <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser" timestamp="1616092597591">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -139,22 +130,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616357528916" />
-    <state width="1877" height="194" key="GridCell.Tab.0.bottom" timestamp="1616373741691">
+    <state width="1877" height="65" key="GridCell.Tab.0.bottom" timestamp="1616770279157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="194" key="GridCell.Tab.0.bottom/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616373741691" />
-    <state width="1877" height="194" key="GridCell.Tab.0.center" timestamp="1616373741691">
+    <state width="1877" height="65" key="GridCell.Tab.0.bottom/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616770279157" />
+    <state width="1877" height="65" key="GridCell.Tab.0.center" timestamp="1616770279157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="194" key="GridCell.Tab.0.center/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616373741691" />
-    <state width="1877" height="194" key="GridCell.Tab.0.left" timestamp="1616373741690">
+    <state width="1877" height="65" key="GridCell.Tab.0.center/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616770279157" />
+    <state width="1877" height="65" key="GridCell.Tab.0.left" timestamp="1616770279157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="194" key="GridCell.Tab.0.left/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616373741690" />
-    <state width="1877" height="194" key="GridCell.Tab.0.right" timestamp="1616373741691">
+    <state width="1877" height="65" key="GridCell.Tab.0.left/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616770279157" />
+    <state width="1877" height="65" key="GridCell.Tab.0.right" timestamp="1616770279157">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="194" key="GridCell.Tab.0.right/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616373741691" />
+    <state width="1877" height="65" key="GridCell.Tab.0.right/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1616770279157" />
     <state x="71" y="102" key="SettingsEditor" timestamp="1616164188716">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
