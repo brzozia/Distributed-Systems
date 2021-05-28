@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel!</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <div class="row">
+
+        <div class="col-2 p-5"></div>
+        <div class="col-8 p-5">
+            <form th:action="@{/flights}" method="get">
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label class="pb-3 text-center" style="font-size: 32px;color: darkcyan">Where are we flying from?</label>
+                        <select class="form-control" th:name="origin">
+                            <option th:each="airport: ${airports}" th:text="${airport.getName()}" th:value="${airport.getIataCode()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label class="pb-3 " style="font-size: 20px;color: darkcyan">When do you want to fly? (optional)</label>
+                        <input type="text" class="form-control" th:value="${departure}" th:name="departure"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="pb-3 " style="font-size: 20px;color: darkcyan">One way? (optional)</label><br>
+                        <input type="checkbox" th:value="${oneWay}" th:name="oneWay"/>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pb-3 " style="font-size: 20px;color: darkcyan">For how many days? (optional)<small>between 1 and 15</small></label>
+                        <input type="text" class="form-control" th:value="${duration}" th:name="duration"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pb-3 " style="font-size: 20px;color: darkcyan">Max price? (optional)<small>positive number, without decimals</small></label>
+                        <input type="text" class="form-control" th:value="${maxPrice}" th:name="maxPrice"/>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-info">submit</button>
+                <a th:href="@{/}" type="button" class="btn btn-info text-white pl-3">try again</a>
+            </form>
+        </div>
+    </div>
+
+</header>
+
+
+</body>
+</html>
