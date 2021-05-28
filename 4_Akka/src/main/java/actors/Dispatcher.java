@@ -12,43 +12,37 @@ import messages.*;
 
 import java.util.concurrent.Executor;
 
-public class MessageDispatcherConfigurator extends AbstractBehavior<Message> {
+public class Dispatcher extends AbstractBehavior<Message> {
     private final Executor exec;
 
-    public MessageDispatcherConfigurator(ActorContext<Message> context) {
+    public Dispatcher(ActorContext<Message> context) {
         super(context);
         exec = context.getSystem().dispatchers().lookup(DispatcherSelector.fromConfig("my-dispatcher"));
-        System.out.println("zuje3");
     }
 
     public static Behavior<Message> create() {
-        return Behaviors.setup(MessageDispatcherConfigurator::new);
+        return Behaviors.setup(Dispatcher::new);
     }
 
     @Override
     public Receive<Message> createReceive() {
         return newReceiveBuilder()
                 .onMessage(RequestMessage.class, this::onRequest)
-                .onMessage(DelegationReplyMessage.class, this::onDelegationReply)
                 .build();
     }
 
     private Behavior<Message> onRequest(RequestMessage request) {
 //        exec.execute(() -> {
-            ActorRef<Message> worker = getContext().spawn(
-                    Behaviors.supervise(RequestWorker.create(getContext().getSelf()))
-                            .onFailure(Exception.class, SupervisorStrategy.restart()), "worker_" + request.queryId+"_"+request.replyTo.path().name());
-            worker.tell(new RequestDelegation(request));
+//            ActorRef<Message> worker = getContext().spawn(
+//                Behaviors.supervise(RequestWorker.create())
+//                        .onFailure(Exception.class, SupervisorStrategy.restart()), "worker_" + request.queryId+"_"+request.replyTo.path().name());
+//            worker.tell(request);
 //        });
-        System.out.println("2wysłałem");
-
-        return this;
-    }
-
-    private Behavior<Message> onDelegationReply(DelegationReplyMessage reply) {
-
-        reply.replyTo.tell(reply.satelliteReply);
-        //kill worker
+        ActorRef<Message> worker = getContext().spawn(
+                Behaviors.supervise(RequestWorker.create())
+                        .onFailure(Exception.class, SupervisorStrategy.restart()), "worker_" + request.queryId+"_"+request.replyTo.path().name());
+        worker.tell(request);
+//
         return this;
     }
 }

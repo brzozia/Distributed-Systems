@@ -1,11 +1,11 @@
 package messages;
 
-public class UpdateDatabaseMessage implements Message{
-    public int stationId;
-    public int newErrors;
+public class DatabaseMessage implements Message{
+    public int satelliteId;
+    public int errorsNumber;
 
-    public UpdateDatabaseMessage(int stationId, int newErrors) {
-        this.stationId = stationId;
-        this.newErrors = newErrors;
+    public DatabaseMessage(int satelliteId, int errorsNumber) {
+        this.satelliteId = satelliteId;
+        this.errorsNumber = errorsNumber;
     }
 }

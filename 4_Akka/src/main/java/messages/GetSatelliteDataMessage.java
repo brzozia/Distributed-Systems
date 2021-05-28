@@ -2,12 +2,14 @@ package messages;
 
 import akka.actor.typed.ActorRef;
 
-public class GetSatelliteData implements Message{
+public class GetSatelliteDataMessage implements Message{
     public int satelliteId;
-    public ActorRef<Message> replyTo;
+    public double time;
+    public ActorRef<SatelliteDataMessage> replyTo;
 
-    public GetSatelliteData(int satelliteId,ActorRef<Message> replyTo) {
+    public GetSatelliteDataMessage(int satelliteId, ActorRef<SatelliteDataMessage> replyTo, double time) {
         this.satelliteId = satelliteId;
         this.replyTo = replyTo;
+        this.time = time;
     }
 }

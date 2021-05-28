@@ -1,2 +1,4 @@
-package messages;public interface Message {
+package messages;
+
+public interface Message {
 }
